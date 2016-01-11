@@ -1,4 +1,9 @@
+*~
+.*~
 .bundle/*
 .idea/*
+**/.vagrant/
 boxes/*
+builds/*
 iso/*
+packer_cache/*
