@@ -20,6 +20,3 @@ umount $VMTOOLS_BUILD_DIR
 rm -rf $VMTOOLS_BUILD_DIR $VMTOOLS_ARCHIVE_DIR
 
 rm -f $HOME_DIR/*.iso
-
-echo "==> Remove packages needed for building guest tools"
-yum -y remove gcc cpp libmpc mpfr kernel-devel kernel-headers perl
