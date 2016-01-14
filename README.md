@@ -5,7 +5,7 @@ $ ln -s /vagrant/.aws $HOME/.aws
 $ ln -s /vagrant/workspace/ $HOME/workspace
 
 Edit .bashrc to include the following keys:
-# Custom Environment Variables
+\# Custom Environment Variables
 export ATLAS_TOKEN=xxxxx
 
 export AWS_ACCESS_KEY_ID=xxxxx
