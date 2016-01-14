@@ -72,6 +72,14 @@
     },
     {
       "type": "shell",
+      "environment_vars": [
+        "HOME_DIR=/home/vagrant"
+      ],
+      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "script": "provisioning-scripts/configure-vagrant-user.sh"
+    },
+    {
+      "type": "shell",
       "script": "provisioning-scripts/install-rvm.sh"
     },
     {
@@ -81,7 +89,6 @@
       ],
       "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
       "scripts": [
-        "provisioning-scripts/configure-vagrant-user.sh",
         "provisioning-scripts/configure-sshd-options.sh",
         "provisioning-scripts/install-aws-cli.sh",
         "provisioning-scripts/install-hashicorp-software.sh",
