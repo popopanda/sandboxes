@@ -1,5 +1,6 @@
 # sandboxes
 
+```
 $ ln -s /vagrant/.pem/ $HOME/.pem
 $ ln -s /vagrant/.aws $HOME/.aws
 $ ln -s /vagrant/workspace/ $HOME/workspace
@@ -16,3 +17,4 @@ export AWS_DEFAULT_REGION=$AWS_REGION
 $ source $HOME/.bashrc
 $ cd $HOME/workspace
 $ bundle
+```
