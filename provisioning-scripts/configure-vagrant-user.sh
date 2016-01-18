@@ -10,6 +10,10 @@ chmod 600 $VAGRANT_USER_HOME/.ssh/authorized_keys
 
 chown -R vagrant:vagrant $VAGRANT_USER_HOME
 
+groupadd docker
+
+usermod -aG docker vagrant
+
 cat > $VAGRANT_USER_HOME/.bash_profile << BASH_PROFILE
 # .bash_profile
 

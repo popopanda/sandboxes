@@ -22,6 +22,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "trigger" do |trigger|
     trigger.fire do
       `docker-machine status #{@machine.name}`
+
       if $?.exitstatus != 0
         ip = @machine.ssh_info[:host]
         port = @machine.ssh_info[:port]
@@ -36,8 +37,23 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.trigger.after :resume do
+    run "docker-machine rm -f #{@machine.name}"
+
+    ip = @machine.ssh_info[:host]
+    port = @machine.ssh_info[:port]
+
+    run "docker-machine -D create -d generic \
+            --generic-ip-address #{ip} \
+            --generic-ssh-key #{@machine.ssh_info[:private_key_path][0]} \
+            --generic-ssh-port #{port} \
+            --generic-ssh-user #{@machine.ssh_info[:username]} \
+        #{@machine.name}"
+  end
+
   config.trigger.before :destroy do
     `docker-machine status #{@machine.name}`
+
     if $?.exitstatus == 0
       run "docker-machine rm -f #{@machine.name}"
     end
