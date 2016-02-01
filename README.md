@@ -10,20 +10,28 @@
 
 #### Create the `devops` Vagrant Machine
 
-  1. Build the `devops` Vagrant box.
+  1. Clone the `sandboxes` repo.
 
   ```
+  $ git clone git@github.com:yhuang/sandboxes.git
   $ cd sandboxes
+  ```
+
+  2. Download `CentOS-7-x86_64-DVD-1511.iso` from a trusted source.  Create the `iso` directory under the `sandboxes` top-level directory, and put the ISO file under the `iso` directory.
+
+  3. Build the `devops` Vagrant box.
+
+  ```
   $ packer build packer-templates/devops.json
   ```
-  
-  2. Add the `devops` Vagrant box.
+
+  4. Add the `devops` Vagrant box.
 
   ```
   $ vagrant box add builds/devops.vmware.box --name devops
   ```
 
-  3. Launch the `devops` Vagrant box.
+  5. Launch the `devops` Vagrant box.
 
   ```
   $ cd devops; vagrant up; cd ..
@@ -38,6 +46,8 @@ or `docker-machine ssh`:
 ```
 $ docker-machine ssh devops
 ```
+
+`vagrant ssh` must be invoked where the `devops` Vagrantfile resides, but `docker-machine ssh devops` can be invoked anywhere.
 
 #### Set up the `devops` Vagrant Machine
 These steps assume the following on the host Mac OS X machine:
