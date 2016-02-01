@@ -13,7 +13,7 @@ wget https://releases.hashicorp.com/packer/$PACKER_VERSION/$PACKER_ARCHIVE
 unzip $PACKER_ARCHIVE -d $HASHICORP_SOFTWARE
 rm -f $PACKER_ARCHIVE
 
-TERRAFORM_VERSION=0.6.10
+TERRAFORM_VERSION=0.6.11
 TERRAFORM_ARCHIVE=terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 wget https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/$TERRAFORM_ARCHIVE

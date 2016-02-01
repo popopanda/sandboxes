@@ -37,7 +37,7 @@
   $ cd devops; vagrant up; cd ..
   ```
 
-#### The `devops` Vagrant Machine Setup
+#### Log onto the `devops` Vagrant Machine
 Once up, the `devops` Vagrant machine may be accessed via either `vagrant ssh`
 ```
 $ cd devops; vagrant ssh
