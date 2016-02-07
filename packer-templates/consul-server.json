@@ -79,8 +79,14 @@
       "script": "provisioning-scripts/configure-vagrant-user.sh"
     },
     {
-      "type": "shell",
-      "script": "provisioning-scripts/install-rvm.sh"
+      "type": "file",
+      "source": "files/consul-server.conf",
+      "destination": "/tmp/consul.conf"
+    },
+    {
+      "type": "file",
+      "source": "scripts/configure-consul-server.sh",
+      "destination": "/tmp/configure-consul-server.sh"
     },
     {
       "type": "shell",
@@ -92,8 +98,7 @@
         "provisioning-scripts/configure-sshd-options.sh",
         "provisioning-scripts/install-aws-cli.sh",
         "provisioning-scripts/create-hashicorp-directory.sh",
-        "provisioning-scripts/install-packer.sh",
-        "provisioning-scripts/install-terraform.sh",
+        "provisioning-scripts/install-consul.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]
