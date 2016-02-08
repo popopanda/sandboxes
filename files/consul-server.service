@@ -1,0 +1,16 @@
+[Unit]
+Description=Consul Agent (server-mode)
+Wants=default.target
+After=default.target
+
+[Service]
+Environment="GOMAXPROCS=2"
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/local/bin/start-consul-server.sh
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 {
   "variables": {
-    "box_basename": "devops",
+    "box_basename": "consul-server",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
@@ -80,13 +80,28 @@
     },
     {
       "type": "file",
-      "source": "files/consul-server.conf",
-      "destination": "/tmp/consul.conf"
+      "source": "scripts/start-consul-server.sh",
+      "destination": "/tmp/start-consul-server.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "inline": [ "mv /tmp/start-consul-server.sh /usr/local/bin/start-consul-server.sh" ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "inline": [ "chmod a+x /usr/local/bin/start-consul-server.sh" ]
     },
     {
       "type": "file",
-      "source": "scripts/configure-consul-server.sh",
-      "destination": "/tmp/configure-consul-server.sh"
+      "source": "files/consul-server.service",
+      "destination": "/tmp/consul-server.service"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "inline": [ "mv /tmp/consul-server.service /etc/systemd/system/consul.service" ]
     },
     {
       "type": "shell",

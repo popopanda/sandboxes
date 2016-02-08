@@ -11,11 +11,4 @@ rm -f $ARCHIVE
 
 sudo mkdir -p /etc/consul.d
 sudo mkdir -p /mnt/consul
-sudo mkdir -p /etc/service
-
-for FILENAME in $(find /tmp -iname '*.sh' -type f); do
-  FILENAME=$(basename $FILENAME)
-  sudo mv "/tmp/${FILENAME}" "/usr/local/bin/${FILENAME}"
-done
-
-sudo mv /tmp/consul.conf /etc/init/consul.conf
+touch /etc/sysconfig/consul

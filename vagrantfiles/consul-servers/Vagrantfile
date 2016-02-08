@@ -1,7 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-name = 'consul-server'
+atlas_envrionment = "--atlas-environment yhuang/consul-server"
+atlas_token = "--atlas-token #{ENV['ATLAS_TOKEN']}"
+consul_servers = "--consul-servers 1"
 
 Vagrant.configure(2) do |config|
   config.vm.define name
@@ -12,20 +14,23 @@ Vagrant.configure(2) do |config|
     vmware.vmx["numvcpus"] = "1"
   end
 
-  config.vm.box = name
+  config.vm.box = 'consul-server'
   config.vm.synced_folder "#{ENV['HOME']}", '/host-data'
 
   config.ssh.insert_key = false
 
-  config.vm.provision "shell", inline: [
-    "export CONSUL_SERVERS=3",
-    "export ATLAS_ENVIRONMENT=yhuang/consul-servers",
-    "/usr/local/bin/configure-consul-server.sh"
-  ]
+  name = 'consul-server-01'
+  node_name = "--node-name #{name}"
 
-  config.vm.define "consul-server-01", primary: true
-  config.vm.define "consul-server-02"
-  config.vm.define "consul-server-03"
+  config.vm.define name, primary: true do |m|
+    config.vm.provision "shell" do |s|
+      s.path = "set-environment-variables.sh"
+      s.args = "#{atlas_envrionment} #{atlas_token} #{consul_servers} #{node_name}"
+    end
+  end
+
+  # config.vm.define "consul-server-02"
+  # config.vm.define "consul-server-03"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
