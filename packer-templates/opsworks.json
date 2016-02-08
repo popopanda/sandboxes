@@ -1,6 +1,6 @@
 {
   "variables": {
-    "box_basename": "devops",
+    "box_basename": "opsworks",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
@@ -80,7 +80,7 @@
     },
     {
       "type": "shell",
-      "script": "provisioning-scripts/install-devops-rvm.sh"
+      "script": "provisioning-scripts/install-opsworks-rvm.sh"
     },
     {
       "type": "shell",
