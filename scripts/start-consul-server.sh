@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source /etc/profile.d/consul.sh
-
 BIND=$(ifconfig | \
 grep 'inet' | \
 grep -v '127.0.0.1' | \
