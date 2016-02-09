@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source /etc/environment
+source /etc/profile.d/consul.sh
 
 BIND=$(ifconfig | \
 grep 'inet' | \

@@ -28,9 +28,12 @@ do
     esac
 done
 
-cat <<EOF | cat >> /etc/environment
+
+cat <<EOF | cat >> /etc/profile.d/consul.sh
 export ATLAS_ENVIRONMENT=$ATLAS_ENVIRONMENT
 export ATLAS_TOKEN=$ATLAS_TOKEN
 export CONSUL_SERVERS=$CONSUL_SERVERS
 export NODE_NAME=$NODE_NAME
 EOF
+
+chmod a+x /etc/profile.d/consul.sh

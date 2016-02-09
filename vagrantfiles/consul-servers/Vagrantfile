@@ -3,11 +3,9 @@
 
 atlas_envrionment = "--atlas-environment yhuang/consul-server"
 atlas_token = "--atlas-token #{ENV['ATLAS_TOKEN']}"
-consul_servers = "--consul-servers 1"
+consul_servers = 1
 
 Vagrant.configure(2) do |config|
-  config.vm.define name
-
   config.vm.provider "vmware_fusion" do |vmware|
     vmware.gui = false
     vmware.vmx["memsize"] = "512"
@@ -19,18 +17,18 @@ Vagrant.configure(2) do |config|
 
   config.ssh.insert_key = false
 
-  name = 'consul-server-01'
-  node_name = "--node-name #{name}"
+  consul_servers.times do |n|
+    name = "consul-server-0#{n+1}"
+    consul_servers = "--consul-servers #{n+1}"
+    node_name = "--node-name #{name}"
 
-  config.vm.define name, primary: true do |m|
-    config.vm.provision "shell" do |s|
-      s.path = "set-environment-variables.sh"
-      s.args = "#{atlas_envrionment} #{atlas_token} #{consul_servers} #{node_name}"
+    config.vm.define name, primary: true do
+      config.vm.provision "shell" do |s|
+        s.path = "set-environment-variables.sh"
+        s.args = "#{atlas_envrionment} #{atlas_token} #{consul_servers} #{node_name}"
+      end
     end
   end
-
-  # config.vm.define "consul-server-02"
-  # config.vm.define "consul-server-03"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

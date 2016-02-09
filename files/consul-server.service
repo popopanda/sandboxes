@@ -1,7 +1,7 @@
 [Unit]
 Description=Consul Agent (server-mode)
-Wants=default.target
-After=default.target
+Requires=multi-user.target
+After=multi-user.target
 
 [Service]
 Environment="GOMAXPROCS=2"

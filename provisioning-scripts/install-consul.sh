@@ -9,6 +9,7 @@ wget https://releases.hashicorp.com/$APPLICATION/$VERSION/$ARCHIVE
 unzip $ARCHIVE -d /usr/local/bin/hashicorp
 rm -f $ARCHIVE
 
-sudo mkdir -p /etc/consul.d
-sudo mkdir -p /mnt/consul
-touch /etc/sysconfig/consul
+mkdir -p /etc/consul.d
+mkdir -p /mnt/consul
+
+systemctl enable consul
