@@ -8,3 +8,4 @@ builds/*
 iso
 iso/*
 packer_cache/*
+atlas-token.txt

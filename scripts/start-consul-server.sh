@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source /etc/profile.d/consul.sh
-
 BIND=$(ifconfig | \
 grep 'inet' | \
 grep -v '127.0.0.1' | \
@@ -19,5 +17,4 @@ exec /usr/local/bin/hashicorp/consul agent \
   -atlas-token=$ATLAS_TOKEN \
   -atlas=$ATLAS_ENVIRONMENT \
   -node=$NODE_NAME \
-  -bind=$BIND \
-  -client=$BIND
+  -bind=$BIND
