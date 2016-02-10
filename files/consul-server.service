@@ -5,7 +5,6 @@ After=multi-user.target
 
 [Service]
 Environment="GOMAXPROCS=2"
-EnvironmentFile=/etc/profile.d/consul.sh
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStart=/usr/local/bin/start-consul-server.sh
 KillMode=process
