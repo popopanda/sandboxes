@@ -1,32 +1,61 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-atlas_envrionment = "--atlas-environment yhuang/consul-server"
-atlas_token = "--atlas-token #{ENV['ATLAS_TOKEN']}"
-consul_servers = 3
+name = 'base'
 
 Vagrant.configure(2) do |config|
+  config.vm.define name
+
   config.vm.provider "vmware_fusion" do |vmware|
     vmware.gui = false
-    vmware.vmx['memsize'] = 512
-    vmware.vmx['numvcpus'] = 1
+    vmware.vmx["memsize"] = 1024
+    vmware.vmx["numvcpus"] = 1
   end
 
-  config.vm.box = 'consul-server'
+  config.vm.box = name
   config.vm.synced_folder "#{ENV['HOME']}", '/host-data'
 
   config.ssh.insert_key = false
 
-  consul_servers.times do |i|
-    name = "consul-server-0#{i+1}"
-    consul_servers = "--consul-servers #{i+1}"
-    node_name = "--node-name #{name}"
+  # http://blog.takanabe.tokyo/2015/11/26/1652/
+  # https://github.com/emyl/vagrant-triggers
+  config.vm.provision "trigger" do |trigger|
+    trigger.fire do
+      `docker-machine status #{@machine.name}`
 
-    config.vm.define name do |n|
-      n.vm.provision "shell" do |script|
-        script.path = "set-environment-variables.sh"
-        script.args = "#{atlas_envrionment} #{atlas_token} #{consul_servers} #{node_name}"
+      if $?.exitstatus != 0
+        ip = @machine.ssh_info[:host]
+        port = @machine.ssh_info[:port]
+
+        run "docker-machine -D create -d generic \
+            --generic-ip-address #{ip} \
+            --generic-ssh-key #{@machine.ssh_info[:private_key_path][0]} \
+            --generic-ssh-port #{port} \
+            --generic-ssh-user #{@machine.ssh_info[:username]} \
+            #{@machine.name}"
       end
+    end
+  end
+
+  config.trigger.after :resume do
+    run "docker-machine rm -f #{@machine.name}"
+
+    ip = @machine.ssh_info[:host]
+    port = @machine.ssh_info[:port]
+
+    run "docker-machine -D create -d generic \
+            --generic-ip-address #{ip} \
+            --generic-ssh-key #{@machine.ssh_info[:private_key_path][0]} \
+            --generic-ssh-port #{port} \
+            --generic-ssh-user #{@machine.ssh_info[:username]} \
+        #{@machine.name}"
+  end
+
+  config.trigger.before :destroy do
+    `docker-machine status #{@machine.name}`
+
+    if $?.exitstatus == 0
+      run "docker-machine rm -f #{@machine.name}"
     end
   end
 

@@ -80,23 +80,8 @@
     },
     {
       "type": "file",
-      "source": "scripts/start-consul-server.sh",
-      "destination": "/tmp/start-consul-server.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "mv /tmp/start-consul-server.sh /usr/local/bin/start-consul-server.sh" ]
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "chmod a+x /usr/local/bin/start-consul-server.sh" ]
-    },
-    {
-      "type": "file",
-      "source": "files/consul-server.service",
-      "destination": "/tmp/consul-server.service"
+      "source": "files/consul-template.service",
+      "destination": "/tmp/consul-template.service"
     },
     {
       "type": "shell",
@@ -113,7 +98,7 @@
         "provisioning-scripts/configure-sshd-options.sh",
         "provisioning-scripts/install-aws-cli.sh",
         "provisioning-scripts/create-hashicorp-directory.sh",
-        "provisioning-scripts/install-consul.sh",
+        "provisioning-scripts/install-consul-template.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]
