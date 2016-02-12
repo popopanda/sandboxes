@@ -4,7 +4,7 @@ Requires=multi-user.target
 After=multi-user.target
 
 [Service]
-ExecStart=consul-template -config /usr/local/etc/consul-template.conf"
+ExecStart=consul-template -template="/etc/consul-template/index.html.ctmpl:/var/www/html/index.html""
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure

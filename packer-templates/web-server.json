@@ -56,21 +56,6 @@
       "inline": [ "sleep 60" ]
     },
     {
-      "type": "file",
-      "source": "binaries/jq",
-      "destination": "/tmp/jq"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "mv /tmp/jq /usr/local/bin/jq" ]
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "chmod a+x /usr/local/bin/jq" ]
-    },
-    {
       "type": "shell",
       "environment_vars": [
         "HOME_DIR=/home/vagrant"
