@@ -1,6 +1,8 @@
 {
   "variables": {
     "box_basename": "base",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
     "iso_checksum": "907e5755f824c5848b9c8efbb484f3cd945e93faa024bad6ba875226f9683b16",
     "iso_checksum_type": "sha256",
@@ -23,9 +25,9 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "iso/{{user `iso_name`}}",
       "output_directory": "packer-{{user `build_timestamp`}}-vmware",
-      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo {{user `ssh_password`}} | sudo -S /sbin/halt -h -p",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ssh_password": "{{user `ssh_password`}}",
       "ssh_port": 22,
       "ssh_wait_timeout": "1800s",
       "tools_upload_flavor": "linux",
@@ -40,17 +42,15 @@
     {
       "type": "shell",
       "pause_before": "10s",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "yum -y update" ]
+      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "inline": [
+        "yum -y update",
+        "reboot"
+      ]
     },
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "reboot" ]
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
       "inline": [ "sleep 60" ]
     },
     {
@@ -58,7 +58,7 @@
       "environment_vars": [
         "HOME_DIR=/home/vagrant"
       ],
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
       "scripts": [
         "provisioning-scripts/configure-vagrant-user.sh",
         "provisioning-scripts/configure-sshd-options.sh",

@@ -8,4 +8,5 @@ builds/*
 iso
 iso/*
 packer_cache/*
+packer-*-vmware/*
 personal-credentials.sh

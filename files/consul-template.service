@@ -1,7 +1,7 @@
 [Unit]
 Description=Consul-Template Daemon
-Requires=multi-user.target
-After=multi-user.target
+Requires=consul.service
+After=consul.service
 
 [Service]
 ExecStart=consul-template -template="/etc/consul-template/index.html.ctmpl:/var/www/html/index.html""

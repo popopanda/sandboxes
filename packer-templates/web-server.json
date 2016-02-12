@@ -1,6 +1,6 @@
 {
   "variables": {
-    "box_basename": "consul-server",
+    "box_basename": "web-server",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
@@ -25,7 +25,7 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "iso/{{user `iso_name`}}",
       "output_directory": "packer-{{user `build_timestamp`}}-vmware",
-      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
+      "shutdown_command": "echo {{user `ssh_password`}} | sudo -S /sbin/halt -h -p",
       "ssh_username": "{{user `ssh_username`}}",
       "ssh_password": "{{user `ssh_password`}}",
       "ssh_port": 22,
@@ -43,12 +43,11 @@
       "type": "shell",
       "pause_before": "10s",
       "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "yum -y update" ]
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "reboot" ]
+      "inline": [
+        "yum -y update",
+        "yum -y install apache2",
+        "reboot"
+      ]
     },
     {
       "type": "shell",
@@ -56,12 +55,19 @@
       "inline": [ "sleep 60" ]
     },
     {
-      "type": "shell",
-      "environment_vars": [
-        "HOME_DIR=/home/vagrant"
-      ],
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "script": "provisioning-scripts/configure-vagrant-user.sh"
+      "type": "file",
+      "source": "scripts/start-consul-client.sh",
+      "destination": "/tmp/start-consul-client.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/consul-client.service",
+      "destination": "/tmp/consul-client.service"
+    },
+    {
+      "type": "file",
+      "source": "files/index.html.ctmpl",
+      "destination": "/tmp/index.html.ctmpl"
     },
     {
       "type": "file",
@@ -71,7 +77,14 @@
     {
       "type": "shell",
       "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "mv /tmp/consul-server.service /etc/systemd/system/consul.service" ]
+      "inline": [
+        "mv /tmp/start-consul-client.sh /usr/local/bin/start-consul-client.sh",
+        "chmod a+x /usr/local/bin/start-consul-client.sh",
+        "mv /tmp/consul-client.service /etc/systemd/system/consul.service",
+        "mkdir -p /etc/consul-template",
+        "mv /tmp/index.html.ctmpl /etc/consul-template/index.html.ctmpl",
+        "mv /tmp/consul-template.service /etc/systemd/system/consul-template.service"
+      ]
     },
     {
       "type": "shell",
@@ -80,9 +93,11 @@
       ],
       "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
       "scripts": [
+        "provisioning-scripts/configure-vagrant-user.sh",
         "provisioning-scripts/configure-sshd-options.sh",
         "provisioning-scripts/install-aws-cli.sh",
         "provisioning-scripts/create-hashicorp-directory.sh",
+        "provisioning-scripts/install-consul.sh",
         "provisioning-scripts/install-consul-template.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"

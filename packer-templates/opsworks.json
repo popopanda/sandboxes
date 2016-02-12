@@ -25,7 +25,7 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "iso/{{user `iso_name`}}",
       "output_directory": "packer-{{user `build_timestamp`}}-vmware",
-      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
+      "shutdown_command": "echo {{user `ssh_password`}} | sudo -S /sbin/halt -h -p",
       "ssh_username": "{{user `ssh_username`}}",
       "ssh_password": "{{user `ssh_password`}}",
       "ssh_port": 22,
@@ -43,12 +43,10 @@
       "type": "shell",
       "pause_before": "10s",
       "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "yum -y update" ]
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "reboot" ]
+      "inline": [
+        "yum -y update",
+        "reboot"
+      ]
     },
     {
       "type": "shell",
@@ -63,12 +61,10 @@
     {
       "type": "shell",
       "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "mv /tmp/jq /usr/local/bin/jq" ]
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [ "chmod a+x /usr/local/bin/jq" ]
+      "inline": [
+        "mv /tmp/jq /usr/local/bin/jq",
+        "chmod a+x /usr/local/bin/jq"
+      ]
     },
     {
       "type": "shell",
@@ -91,9 +87,6 @@
       "scripts": [
         "provisioning-scripts/configure-sshd-options.sh",
         "provisioning-scripts/install-aws-cli.sh",
-        "provisioning-scripts/create-hashicorp-directory.sh",
-        "provisioning-scripts/install-packer.sh",
-        "provisioning-scripts/install-terraform.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]
