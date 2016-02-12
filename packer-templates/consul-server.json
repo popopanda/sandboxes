@@ -65,15 +65,6 @@
     },
     {
       "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [
-        "mv /tmp/start-consul-server.sh /usr/local/bin/start-consul-server.sh",
-        "chmod a+x /usr/local/bin/start-consul-server.sh",
-        "mv /tmp/consul-server.service /etc/systemd/system/consul.service"
-      ]
-    },
-    {
-      "type": "shell",
       "environment_vars": [
         "HOME_DIR=/home/vagrant"
       ],
@@ -84,6 +75,8 @@
         "provisioning-scripts/install-aws-cli.sh",
         "provisioning-scripts/create-hashicorp-directory.sh",
         "provisioning-scripts/install-consul.sh",
+        "provisioning-scripts/configure-consul-server.sh",
+        "provisioning-scripts/enable-consul-service.sh",        
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]

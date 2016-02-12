@@ -60,14 +60,6 @@
     },
     {
       "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [
-        "mv /tmp/jq /usr/local/bin/jq",
-        "chmod a+x /usr/local/bin/jq"
-      ]
-    },
-    {
-      "type": "shell",
       "environment_vars": [
         "HOME_DIR=/home/vagrant"
       ],
@@ -86,6 +78,7 @@
       "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
       "scripts": [
         "provisioning-scripts/configure-sshd-options.sh",
+        "provisioning-scripts/install-jq.sh",
         "provisioning-scripts/install-aws-cli.sh",
         "provisioning-scripts/create-hashicorp-directory.sh",
         "provisioning-scripts/install-packer.sh",

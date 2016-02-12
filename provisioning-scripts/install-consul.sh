@@ -11,5 +11,3 @@ rm -f $ARCHIVE
 
 mkdir -p /etc/consul.d
 mkdir -p /mnt/consul
-
-systemctl enable consul

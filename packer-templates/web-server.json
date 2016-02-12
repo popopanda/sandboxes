@@ -81,19 +81,6 @@
     },
     {
       "type": "shell",
-      "execute_command": "echo {{user `ssh_password`}} | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
-      "inline": [
-        "mv /tmp/web-server-health-check.json /etc/consul.d/web-server-health-check.json",
-        "mv /tmp/start-consul-client.sh /usr/local/bin/start-consul-client.sh",
-        "chmod a+x /usr/local/bin/start-consul-client.sh",
-        "mv /tmp/consul-client.service /etc/systemd/system/consul.service",
-        "mkdir -p /etc/consul-template",
-        "mv /tmp/index.html.ctmpl /etc/consul-template/index.html.ctmpl",
-        "mv /tmp/consul-template.service /etc/systemd/system/consul-template.service"
-      ]
-    },
-    {
-      "type": "shell",
       "environment_vars": [
         "HOME_DIR=/home/vagrant"
       ],
@@ -105,6 +92,8 @@
         "provisioning-scripts/create-hashicorp-directory.sh",
         "provisioning-scripts/install-consul.sh",
         "provisioning-scripts/install-consul-template.sh",
+        "provisioning-scripts/configure-web-server.sh",
+        "provisioning-scripts/enable-consul-service.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]
