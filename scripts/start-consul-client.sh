@@ -6,4 +6,5 @@ exec /usr/local/bin/hashicorp/consul agent \
   -atlas-join \
   -atlas-token=$ATLAS_TOKEN \
   -atlas=$ATLAS_ENVIRONMENT \
-  -node=$NODE_NAME
+  -node=$NODE_NAME \
+  >> /var/log/consul-client.log 2>&1

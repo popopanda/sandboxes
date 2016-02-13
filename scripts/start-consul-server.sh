@@ -17,4 +17,5 @@ exec /usr/local/bin/hashicorp/consul agent \
   -atlas-token=$ATLAS_TOKEN \
   -atlas=$ATLAS_ENVIRONMENT \
   -node=$NODE_NAME \
-  -bind=$BIND
+  -bind=$BIND \
+  >> /var/log/consul-server.log 2>&1
