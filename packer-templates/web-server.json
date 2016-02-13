@@ -76,6 +76,11 @@
     },
     {
       "type": "file",
+      "source": "scripts/start-consul-template.sh",
+      "destination": "/tmp/start-consul-template.sh"
+    },
+    {
+      "type": "file",
       "source": "files/consul-template.service",
       "destination": "/tmp/consul-template.service"
     },
@@ -93,7 +98,9 @@
         "provisioning-scripts/install-consul.sh",
         "provisioning-scripts/install-consul-template.sh",
         "provisioning-scripts/configure-web-server.sh",
+        "provisioning-scripts/enable-httpd-service.sh",
         "provisioning-scripts/enable-consul-service.sh",
+        "provisioning-scripts/enable-consul-template-service.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]
