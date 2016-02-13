@@ -8,7 +8,7 @@ consul_servers = 3
 Vagrant.configure(2) do |config|
   config.vm.provider "vmware_fusion" do |vmware|
     vmware.gui = false
-    vmware.vmx['memsize'] = 512
+    vmware.vmx['memsize'] = 256
     vmware.vmx['numvcpus'] = 1
   end
 
