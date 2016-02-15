@@ -72,11 +72,10 @@
       "scripts": [
         "provisioning-scripts/configure-vagrant-user.sh",
         "provisioning-scripts/configure-sshd-options.sh",
-        "provisioning-scripts/install-aws-cli.sh",
         "provisioning-scripts/create-hashicorp-directory.sh",
         "provisioning-scripts/install-consul.sh",
         "provisioning-scripts/configure-consul-server.sh",
-        "provisioning-scripts/enable-consul-service.sh",        
+        "provisioning-scripts/enable-consul-service.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]

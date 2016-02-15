@@ -1,6 +1,6 @@
 {
   "variables": {
-    "box_basename": "web-server",
+    "box_basename": "haproxy",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
@@ -55,8 +55,8 @@
     },
     {
       "type": "file",
-      "source": "files/web-server-health-check.json",
-      "destination": "/tmp/web-server-health-check.json"
+      "source": "files/haproxy-health-check.json",
+      "destination": "/tmp/haproxy-health-check.json"
     },
     {
       "type": "file",
@@ -70,12 +70,12 @@
     },
     {
       "type": "file",
-      "source": "files/index.html.ctmpl",
-      "destination": "/tmp/index.html.ctmpl"
+      "source": "files/haproxy.cfg.ctmpl",
+      "destination": "/tmp/haproxy.cfg.ctmpl"
     },
     {
       "type": "file",
-      "source": "files/web-server-consul-template.cfg",
+      "source": "files/haproxy-consul-template.cfg",
       "destination": "/tmp/consul-template.cfg"
     },
     {
@@ -97,12 +97,12 @@
       "scripts": [
         "provisioning-scripts/configure-vagrant-user.sh",
         "provisioning-scripts/configure-sshd-options.sh",
-        "provisioning-scripts/install-httpd.sh",
+        "provisioning-scripts/install-haproxy.sh",
         "provisioning-scripts/create-hashicorp-directory.sh",
         "provisioning-scripts/install-consul.sh",
         "provisioning-scripts/install-consul-template.sh",
-        "provisioning-scripts/configure-web-server.sh",
-        "provisioning-scripts/enable-httpd-service.sh",
+        "provisioning-scripts/configure-haproxy.sh",
+        "provisioning-scripts/enable-haproxy.sh",
         "provisioning-scripts/enable-consul-service.sh",
         "provisioning-scripts/enable-consul-template-service.sh",
         "provisioning-scripts/install-vmtools.sh",
