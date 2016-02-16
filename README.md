@@ -34,13 +34,13 @@
   5. Launch the `devops` Vagrant box.
 
   ```
-  $ cd devops; vagrant up; cd ..
+  $ cd vagrantfiles/devops; vagrant up; cd ../..
   ```
 
 #### Log onto the `devops` Vagrant Machine
 Once up, the `devops` Vagrant machine may be accessed via either `vagrant ssh`
 ```
-$ cd devops; vagrant ssh
+$ cd vagrantfiles/devops; vagrant ssh
 ```
 or `docker-machine ssh`:
 ```
