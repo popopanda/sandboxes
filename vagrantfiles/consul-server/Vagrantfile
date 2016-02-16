@@ -3,7 +3,7 @@
 name = 'consul-server'
 num_servers = 3
 
-atlas_envrionment = "--atlas-environment yhuang/consul-server"
+atlas_envrionment = "--atlas-environment #{ENV['ATLAS_ENVIRONMENT']}"
 atlas_token = "--atlas-token #{ENV['ATLAS_TOKEN']}"
 consul_servers = "--consul-servers #{num_servers}"
 

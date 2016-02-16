@@ -3,7 +3,7 @@
 name = 'web-server'
 num_servers = 2
 
-atlas_envrionment = "--atlas-environment yhuang/consul-server"
+atlas_envrionment = "--atlas-environment #{ENV['ATLAS_ENVIRONMENT']}"
 atlas_token = "--atlas-token #{ENV['ATLAS_TOKEN']}"
 
 Vagrant.configure(2) do |config|
