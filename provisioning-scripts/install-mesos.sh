@@ -13,10 +13,11 @@ rm -f $CLOUDERA_RPM
 yum -y install zookeeper zookeeper-server
 sudo -u zookeeper zookeeper-server-initialize --myid=1
 
-systemctl enable chronos
-systemctl enable marathon
 systemctl enable zookeeper-server
-
-systemctl start chronos
-systemctl start marathon
 systemctl start zookeeper-server
+
+systemctl enable marathon
+systemctl start marathon
+
+systemctl enable chronos
+systemctl start chronos
