@@ -10,14 +10,20 @@ wget https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/$CLOUDE
 yum -y --nogpgcheck localinstall $CLOUDERA_RPM
 rm -f $CLOUDERA_RPM
 
+# zookeeper-server is needed for the installation of the startup scripts.
 yum -y install zookeeper zookeeper-server
-sudo -u zookeeper zookeeper-server-initialize --myid=1
 
 systemctl enable zookeeper-server
 systemctl start zookeeper-server
 
+# If you are deploying multiple ZooKeeper servers after a fresh install, you need
+# to create a myid file in the data directory.
+sudo -u zookeeper zookeeper-server-initialize --myid=1
+
+# Marathon is the init/systemd/upstart for Apache Mesos
 systemctl enable marathon
 systemctl start marathon
 
+# Chronos is the cron for Apache Mesos
 systemctl enable chronos
 systemctl start chronos
