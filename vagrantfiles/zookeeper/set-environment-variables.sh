@@ -13,12 +13,16 @@ do
         ATLAS_TOKEN=$1
         shift
         ;;
-    --consul-servers)
-        CONSUL_SERVERS=$1
+    --myid)
+        MYID=$1
         shift
         ;;
     --node-name)
         NODE_NAME=$1
+        shift
+        ;;
+    --zookeeper-quorum)
+        ZOOKEEPER_QUORUM=$1
         shift
         ;;
     *)
@@ -28,11 +32,13 @@ do
     esac
 done
 
-cat <<EOF > /etc/profile.d/consul.sh
+
+cat <<EOF | cat >> /etc/profile.d/consul.sh
 ATLAS_ENVIRONMENT=$ATLAS_ENVIRONMENT
 ATLAS_TOKEN=$ATLAS_TOKEN
-CONSUL_SERVERS=$CONSUL_SERVERS
+MYID=$MYID
 NODE_NAME=$NODE_NAME
+ZOOKEEPER_QUORUM=$ZOOKEEPER_QUORUM
 EOF
 
 chmod a+x /etc/profile.d/consul.sh

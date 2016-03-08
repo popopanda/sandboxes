@@ -1,0 +1,3 @@
+[Service]
+EnvironmentFile=-/etc/profile.d/consul.sh
+ExecStartPre=/usr/local/bin/replace-with-zookeeper-id.sh

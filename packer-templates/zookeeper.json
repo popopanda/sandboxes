@@ -1,6 +1,6 @@
 {
   "variables": {
-    "box_basename": "mesos",
+    "box_basename": "zookeeper",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
@@ -33,7 +33,7 @@
       "tools_upload_flavor": "linux",
       "vmx_data": {
         "cpuid.coresPerSocket": 1,
-        "memsize": 1024,
+        "memsize": 512,
         "numvcpus": 1
       }
     }
@@ -54,6 +54,71 @@
       "inline": [ "sleep 60" ]
     },
     {
+      "type": "file",
+      "source": "files/zookeeper-health-check.json",
+      "destination": "/tmp/zookeeper-health-check.json"
+    },
+    {
+      "type": "file",
+      "source": "scripts/start-consul-client.sh",
+      "destination": "/tmp/start-consul-client.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/consul-client.service",
+      "destination": "/tmp/consul-client.service"
+    },
+    {
+      "type": "file",
+      "source": "files/zookeeper-consul-client.service.override",
+      "destination": "/tmp/consul-client.service.override"
+    },
+    {
+      "type": "file",
+      "source": "files/zookeeper.service.override",
+      "destination": "/tmp/zookeeper.service.override"
+    },
+    {
+      "type": "file",
+      "source": "scripts/start-consul-template.sh",
+      "destination": "/tmp/start-consul-template.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/consul-template.service",
+      "destination": "/tmp/consul-template.service"
+    },
+    {
+      "type": "file",
+      "source": "files/zookeeper-consul-template.cfg",
+      "destination": "/tmp/consul-template.cfg"
+    },
+    {
+      "type": "file",
+      "source": "files/zoo.cfg.ctmpl",
+      "destination": "/tmp/zoo.cfg.ctmpl"
+    },
+    {
+      "type": "file",
+      "source": "scripts/bootstrap-zookeeper.sh",
+      "destination": "/tmp/bootstrap-zookeeper.sh"
+    },
+    {
+      "type": "file",
+      "source": "scripts/report-zookeeper-mode.sh",
+      "destination": "/tmp/report-zookeeper-mode.sh"
+    },
+    {
+      "type": "file",
+      "source": "scripts/set-zookeeper-id.sh",
+      "destination": "/tmp/set-zookeeper-id.sh"
+    },
+    {
+      "type": "file",
+      "source": "scripts/replace-with-zookeeper-id.sh",
+      "destination": "/tmp/replace-with-zookeeper-id.sh"
+    },
+    {
       "type": "shell",
       "environment_vars": [
         "HOME_DIR=/home/vagrant"
@@ -62,7 +127,13 @@
       "scripts": [
         "provisioning-scripts/configure-vagrant-user.sh",
         "provisioning-scripts/configure-sshd-options.sh",
-        "provisioning-scripts/install-mesos.sh",
+        "provisioning-scripts/install-zookeeper.sh",
+        "provisioning-scripts/create-hashicorp-directory.sh",
+        "provisioning-scripts/install-consul.sh",
+        "provisioning-scripts/install-consul-template.sh",
+        "provisioning-scripts/configure-zookeeper.sh",
+        "provisioning-scripts/enable-consul-service.sh",
+        "provisioning-scripts/enable-consul-template-service.sh",
         "provisioning-scripts/install-vmtools.sh",
         "provisioning-scripts/clean-up.sh"
       ]
