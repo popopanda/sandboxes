@@ -1,11 +1,11 @@
 [Unit]
 Description=Consul Agent (server mode)
-Requires=basic.target
-After=basic.target
+Requires=network-online.target
+After=network-online.target
 
 [Service]
 Environment="GOMAXPROCS=2"
-EnvironmentFile=-/etc/profile.d/consul.sh
+EnvironmentFile=/etc/profile.d/consul.sh
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStart=/usr/local/bin/start-consul-server.sh
 KillMode=process

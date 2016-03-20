@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source /etc/profile.d/consul.sh
+
 exec /usr/local/bin/hashicorp/consul agent \
   -data-dir=/mnt/consul \
   -config-dir=/etc/consul.d \

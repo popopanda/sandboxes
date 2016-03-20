@@ -40,5 +40,3 @@ MYID=$MYID
 NODE_NAME=$NODE_NAME
 ZOOKEEPER_QUORUM=$ZOOKEEPER_QUORUM
 EOF
-
-chmod a+x /etc/profile.d/consul.sh

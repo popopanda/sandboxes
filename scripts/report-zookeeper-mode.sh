@@ -2,13 +2,21 @@
 
 MODE=$(echo stat | nc localhost 2181 | grep Mode | cut -d ' ' -f 2)
 
-if [ "$MODE" = "follower" ]; then
+case $MODE in
+  follower)
     echo "This Zookeeper server is a follower."
     exit 0
-elif [ "$MODE" = "leader" ]; then
+    ;;
+  leader)
     echo "This Zookeeper server is the leader."
     exit 0
-else
+    ;;
+  standalone)
+    echo "This Zookeeper server is running in standalone mode."
+    exit 0
+    ;;
+  *)
     echo "Error: This Zookeeper server is in an unknown state [${MODE}]!"
     exit 1
-fi
+    ;;
+esac
