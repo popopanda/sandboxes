@@ -11,7 +11,7 @@ gem install bundler
 echo "==> Install additional Ruby versions"
 for VERSION in 2.0.0-p353
 do
-	rvm install $VERSION
-	rvm use $VERSION
-	gem install bundler
+  rvm install $VERSION
+  rvm use $VERSION
+  gem install bundler
 done
