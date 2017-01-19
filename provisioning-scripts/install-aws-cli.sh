@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+yum -y install python-devel
+
 VAGRANT_USER_HOME=/home/vagrant
 
 AWS_CLI_BUNDLE=awscli-bundle
